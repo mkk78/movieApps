@@ -10,16 +10,21 @@ import UIKit
 
 class GenresController: UIViewController {
 
-    var genres = [Genre]()
+    var genres: [Genre] = []
+    
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
-      
+        super.viewDidLoad()
+        
         API.getGenres(completion: { result in
             switch result {
             case .failure(let error):
                 print(error)
             case .success(let genresResult):
                 self.genres = genresResult
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
         })
     }
@@ -38,6 +43,8 @@ extension GenresController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "moviesController") as? MoviesController
+        vc?.genre = genres[indexPath.row]
+        
         self.navigationController?.pushViewController(vc!, animated: true)
     }
 }

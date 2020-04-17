@@ -12,7 +12,6 @@ import Foundation
 struct Movie: Decodable {
     let id: Int!
     let posterPath: String
-    let videoPath: String?
     let backdrop: String
     let title: String
     let releaseDate: String
@@ -20,11 +19,11 @@ struct Movie: Decodable {
     let overview: String
     
     private enum CodingKeys: String, CodingKey {
-        case id, posterPath = "poster_path", videoPath, backdrop = "backdrop_path", title, releaseDate = "release_date", rating = "vote_average", overview
+        case id, posterPath = "poster_path", backdrop = "backdrop_path", title, releaseDate = "release_date", rating = "vote_average", overview
     }
 }
 
-struct APIResults: Decodable {
+struct MovieResults: Decodable {
     let page: Int
     let numResults: Int
     let numPages: Int
